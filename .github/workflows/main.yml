@@ -1,16 +1,7 @@
 name: Orquestador CERT
 
 on:
-  repository_dispatch:
-    types: [jira-orquestador-certificacion]
-  workflow_dispatch:
-    inputs:
-      issue_key:
-        description: "Clave del ticket de Jira"
-        required: true
-      branch_name:
-        description: "Rama asociada al ticket"
-        required: true
+  push:
 
 permissions:
   contents: write
@@ -18,15 +9,11 @@ permissions:
 jobs:
   run-cert-workflows:
     runs-on: ubuntu-latest
+
     steps:
-
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Lanzar workflow de congelamiento
+      - name: Ejecutar Orquestador CERT
         shell: bash
         run: |
-          echo "📌 ISSUE_KEY: $ISSUE_KEY"
-          echo "🌿 BRANCH_NAME: $BRANCH_NAME"
-
-          echo "🚀 Disparando workflow de congelamiento en la rama $BRANCH_NAME para el issue $ISSUE_KEY ..."
+          echo "🚀 Orquestador CERT ejecutado automáticamente"
+          echo "📌 ISSUE_KEY: ${{ github.event.head_commit.message }}"
+          echo "🌿 BRANCH_NAME: ${{ github.ref_name }}"
